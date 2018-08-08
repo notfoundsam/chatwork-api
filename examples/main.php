@@ -7,6 +7,6 @@ use Notfoundsam\Chatwork\Client as Client;
 $room_id = 'room_id';
 $token = 'token';
 
-$client = new Client($token, $is_prod = false);
-
-$client->message('[To:1328058] test', $room_id, $type = '500');
+// Send message only if it's production
+$client = new Client($token, $is_prod = true);
+$client->message($room_id, $title = 'FATAL ERROR', 'Mesage', $to = ['0000000' => 'Mr.John']);

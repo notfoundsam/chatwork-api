@@ -12,7 +12,6 @@ class Client
     private static $API_URL = 'https://api.chatwork.com/v2/';
 
     protected $headers = [];
-    // protected $data = [];
 
     private $is_prod;
 
@@ -22,20 +21,18 @@ class Client
         $this->is_prod = $is_prod;
     }
 
-    public function message($message, $room_id, $type = null)
+    public function message($room_id, $title, $message, $trace, $to = [])
     {
-        $this->createMessage($message, $type);
+        $this->createMessage($title, $message, $trace, $to);
 
         if (!$this->is_prod)
         {
-            var_dump($message);
             return;
         }
 
         try
         {
-            $response = \Requests::post(static::$API_URL."rooms/{$room_id}/messages", $this->headers, ['body' => $message]);
-            var_dump($response);
+            \Requests::post(static::$API_URL."rooms/{$room_id}/messages", $this->headers, ['body' => $message]);
         }
         catch (\Exception $e)
         {
@@ -43,16 +40,27 @@ class Client
         }
     }
 
-    private function createMessage(&$message, $type = null)
+    private function createMessage(&$title, &$message, &$trace, &$to)
     {
-        switch ($type) {
-            case '500':
-                $message = "[info][title]500 ERROR[/title]{$message}[/info]";
-                break;
-            
-            default:
-                # code...
-                break;
+        $now = new \DateTime();
+        $time = $now->modify('+9 hour')->format('Y-m-d H:i:s');
+
+        $str_to = "";
+
+        foreach ($to as $id => $name)
+        {
+            $str_to .= "\n[To:{$id}] $name";
         }
+
+        // var_dump($trace);
+        
+        $str_trace = '';
+
+        foreach ($trace as $key => $value)
+        {
+            $str_trace .= "\n{$key}: {$value}";
+        }
+
+        $message = "[info][title]{$title}[/title]{$message}{$str_trace}[hr]{$time}{$str_to}[/info]";
     }
 }
