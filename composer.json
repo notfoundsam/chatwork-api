@@ -1,7 +1,7 @@
 {
     "name": "notfoundsam/chatwork-api",
     "type": "library",
-    "description": "Yahoo auction bidder",
+    "description": "Chatwork simple api for sennding messages",
     "keywords": ["chatwork", "api", "php"],
     "homepage": "https://github.com/notfoundsam/chatwork-api",
     "authors": [
