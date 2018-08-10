@@ -52,14 +52,14 @@ class Client
             $str_to .= "\n[To:{$id}] $name";
         }
 
-        // var_dump($trace);
-        
         $str_trace = '';
 
         foreach ($trace as $key => $value)
         {
-            $str_trace .= "\n{$key}: {$value}";
+            $str_trace .= "\n{$key} => {$value}";
         }
+
+        $str_trace .= "\nhost_ip => {$_SERVER['SERVER_ADDR']}";
 
         $message = "[info][title]{$title}[/title]{$message}{$str_trace}[hr]{$time}{$str_to}[/info]";
     }
