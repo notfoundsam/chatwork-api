@@ -61,6 +61,19 @@ class Client
 
         $str_trace .= "\nhost_ip => {$_SERVER['SERVER_ADDR']}";
 
+        if (!empty($_SERVER['HTTP_CLIENT_IP']))
+        {
+            $str_trace .= "\nHTTP_CLIENT_IP => {$_SERVER['HTTP_CLIENT_IP']}";
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+        {
+            $str_trace .= "\nHTTP_X_FORWARDED_FOR => {$_SERVER['HTTP_X_FORWARDED_FOR']}";
+        }
+        else
+        {
+            $str_trace .= "\nREMOTE_ADDR => {$_SERVER['REMOTE_ADDR']}";
+        }
+
         $message = "[info][title]{$title}[/title]{$message}{$str_trace}[hr]{$time}{$str_to}[/info]";
     }
 }
