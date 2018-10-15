@@ -74,6 +74,15 @@ class Client
             $str_trace .= "\nREMOTE_ADDR => {$_SERVER['REMOTE_ADDR']}";
         }
 
+        if (!empty($_SERVER['REQUEST_URI']))
+        {
+            $str_trace .= "\nREQUEST_URI => {$_SERVER['REQUEST_URI']}";
+        }
+        else
+        {
+            $str_trace .= "\nREQUEST_URI => null";
+        }
+
         $message = "[info][title]{$title}[/title]{$message}{$str_trace}[hr]{$time}{$str_to}[/info]";
     }
 }
