@@ -85,4 +85,58 @@ class Client
 
         $message = "[info][title]{$title}[/title]{$message}{$str_trace}[hr]{$time}{$str_to}[/info]";
     }
+
+    /**
+     * Slack
+     */
+    public function cw_2_slack($v){
+
+        $v = str_replace(["[info]", "[/info]"], ["```", "```\n"], $v);
+        $v = str_replace(["[title]"], "", $v);
+        $v = str_replace(["[/title]"], "[hr]", $v);
+        $v = str_replace("[hr]", "\n------------------\n", $v);
+
+        $v = str_replace(
+            ["(lightbulb)", "(y)", "(devil)", "(*)", "(handshake)", "(cracker)", "(flex)"],
+            [":bulb:", ":+1:", ":japanese_ogre:", ":star:", ":pray:", ":heartbeat:", ":ok_hand:"],
+            $v);
+
+        return $v;
+    }
+
+    public function send_slack($msg, $room = ""){
+
+        $res = [];
+
+        if(!$room){
+            $room = "bb";
+        }
+
+        $params = [
+            'text' => $this->cw_2_slack($msg),
+            "token" => SLACK_TOKEN_JIGEN,
+            "channel" => $room
+        ];
+
+        $options = [
+            CURLOPT_URL => "https://slack.com/api/chat.postMessage",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query($params, '', '&'),
+        ];
+
+        try{
+            $ch = curl_init();
+            curl_setopt_array($ch, $options);
+            $res = curl_exec($ch);
+            curl_close($ch);
+
+        }catch(Exception $e){
+            //
+        }
+
+        return $res;
+
+    }
 }
