@@ -33,6 +33,7 @@ class Client
         try
         {
             \Requests::post(static::$API_URL."rooms/{$room_id}/messages", $this->headers, ['body' => $message]);
+            $this->send_slack($message, 'iacc_slack移行');
         }
         catch (\Exception $e)
         {
