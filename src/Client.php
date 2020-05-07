@@ -90,21 +90,6 @@ class Client
     /**
      * Slack
      */
-    public function cw_2_slack($v){
-
-        $v = str_replace(["[info]", "[/info]"], ["```", "```\n"], $v);
-        $v = str_replace(["[title]"], "", $v);
-        $v = str_replace(["[/title]"], "[hr]", $v);
-        $v = str_replace("[hr]", "\n------------------\n", $v);
-
-        $v = str_replace(
-            ["(lightbulb)", "(y)", "(devil)", "(*)", "(handshake)", "(cracker)", "(flex)"],
-            [":bulb:", ":+1:", ":japanese_ogre:", ":star:", ":pray:", ":heartbeat:", ":ok_hand:"],
-            $v);
-
-        return $v;
-    }
-
     public function send_slack($msg, $room = ""){
 
         $res = [];
