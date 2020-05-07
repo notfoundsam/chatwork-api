@@ -109,18 +109,14 @@ class Client
 
         $res = [];
 
-        if(!$room){
-            $room = "bb";
-        }
-
         $params = [
-            'text' => $this->cw_2_slack($msg),
+            "text" => $msg,
             "token" => SLACK_TOKEN_JIGEN,
             "channel" => $room
         ];
 
         $options = [
-            CURLOPT_URL => "https://slack.com/api/chat.postMessage",
+            CURLOPT_URL => "https://api.iacc.tokyo/api/chat.postMessage",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_POST => true,
